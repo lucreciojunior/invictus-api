@@ -1,7 +1,8 @@
 Cypress.Commands.add('Login', (email, senha) => {
     cy.api({
         method: 'POST',
-        url: 'http://localhost:21165/api/login',
+        url: 'https://develop.qacoders-academy.com.br/api/login',
+        failOnStatusCode: false,
         body: {
           "mail": email,
           "password": senha

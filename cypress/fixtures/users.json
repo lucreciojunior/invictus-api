@@ -1,10 +1,10 @@
 {
     "CadastroSucess": {
-      "clientCode": "teste com sucesso",
+      "clientCode": "teste",
       "fullName": "Antonio Ricardo",
-      "birthDate": "20/03/2000",
+      "birthDate": "20032000",
       "mail": "testeqacoders@gmail.com",
-      "phone": "55 81 99701-2541",
+      "phone": "5581997012541",
       "currentRole": "Antonomo",
       "documents": [
         {
@@ -15,7 +15,7 @@
       "address": [
         {
           "country": "Belgium",
-          "zipCode": "81688-882",
+          "zipCode": "81688882",
           "city": "Russelview",
           "state": "SI",
           "district": "Wellingtonberg",
@@ -34,3 +34,5 @@
       ]
     }
   }
+
+  

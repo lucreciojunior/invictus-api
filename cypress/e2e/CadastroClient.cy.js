@@ -9,21 +9,178 @@ describe('Validando e cadastrando cliente', () => {
     let token
 
     before(() =>{
-        cy.Login('testejr@qacoders.com', 'Teste@123').then(tkn => { token = tkn })
+        cy.Login('sysadmin@qacoders.com', '1234@Test').then(tkn => { token = tkn })
     })
 
-    it.only('Cadastro com sucesso', () => {
+    context.only('Validando campo FullName', () => {
+        it('FullName é obrigatorio', () => {
+            cy.api({
+                method: 'POST',
+                url: 'https://develop.qacoders-academy.com.br/api/client',
+                headers: {authorization: token},
+                failOnStatusCode: false,
+                body: {
+                    "fullName": "",
+                    "birthDate": "20032000",
+                    "mail": faker.internet.email(firstName),
+                    "phone": faker.phone.number('#############'),
+                    "currentRole": faker.person.jobType(),
+                    "documents": [
+                        {
+                            "cpf": cpf,
+                            "rg": rg
+                        }
+                    ],
+                    "address": [
+                        {
+                            "country": faker.location.country(),
+                            "zipCode": faker.location.zipCode('########'),
+                            "city": faker.location.city(),
+                            "state": "PE",
+                            "district": 'Brazil',
+                            "street": faker.location.street(),
+                            "number": faker.location.buildingNumber(),
+                            "complement": '363 casa'
+                        }
+                    ]     
+                },
+            }).then((Response) => {
+                expect(Response.status).to.eq(400);
+                expect(Response.body).to.deep.eq(['O campo Nome Completo é obrigatório.'])
+                cy.log(Response.body)
+            })
+            
+        });
+        it('FullName deve conter "Nome e sobrenome"', () => {
+            cy.api({
+                method: 'POST',
+                url: 'https://develop.qacoders-academy.com.br/api/client',
+                headers: {authorization: token},
+                failOnStatusCode: false,
+                body: {
+                    "fullName": "Teste",
+                    "birthDate": "20032000",
+                    "mail": faker.internet.email(firstName),
+                    "phone": faker.phone.number('#############'),
+                    "currentRole": faker.person.jobType(),
+                    "documents": [
+                        {
+                            "cpf": cpf,
+                            "rg": rg
+                        }
+                    ],
+                    "address": [
+                        {
+                            "country": faker.location.country(),
+                            "zipCode": faker.location.zipCode('########'),
+                            "city": faker.location.city(),
+                            "state": "PE",
+                            "district": 'Brazil',
+                            "street": faker.location.street(),
+                            "number": faker.location.buildingNumber(),
+                            "complement": '363 casa'
+                        }
+                    ]     
+                },
+            }).then((Response) => {
+                expect(Response.status).to.eq(400);
+                expect(Response.body).to.deep.eq(['O campo Nome Completo deve conter entre 8 e 100 caracteres.'])
+                cy.log(Response.body)
+            })
+            
+        });
+        it('FullName letras e espaços', () => {
+            cy.api({
+                method: 'POST',
+                url: 'https://develop.qacoders-academy.com.br/api/client',
+                headers: {authorization: token},
+                failOnStatusCode: false,
+                body: {
+                    "fullName": "12121$$#@@! !@!@!@!",
+                    "birthDate": "20032000",
+                    "mail": faker.internet.email(firstName),
+                    "phone": faker.phone.number('#############'),
+                    "currentRole": faker.person.jobType(),
+                    "documents": [
+                        {
+                            "cpf": cpf,
+                            "rg": rg
+                        }
+                    ],
+                    "address": [
+                        {
+                            "country": faker.location.country(),
+                            "zipCode": faker.location.zipCode('########'),
+                            "city": faker.location.city(),
+                            "state": "PE",
+                            "district": 'Brazil',
+                            "street": faker.location.street(),
+                            "number": faker.location.buildingNumber(),
+                            "complement": '363 casa'
+                        }
+                    ]     
+                },
+            }).then((Response) => {
+                expect(Response.status).to.eq(400);
+                expect(Response.body).to.deep.eq(['O campo Nome Completo deve conter apenas letras e espaços em branco.'])
+                cy.log(Response.body)
+            })
+            
+        });
+        it('FullName limite de caracteres', () => {
+            cy.api({
+                method: 'POST',
+                url: 'https://develop.qacoders-academy.com.br/api/client',
+                headers: {authorization: token},
+                failOnStatusCode: false,
+                body: {
+                    "fullName": "asdfgpoiuyasdfgpoiuyasdfgpoiuyasdfgpoiuyasdfgpoiuyibdflaishjbfedljashbefljhasbljdfhbalsdhvfljashvdfjhasvdljfhvalsjdhfvljashdvfljashvdfljvsaldjhajifasgdiahadsasasdasdasdasdasdasdasdasdasdsasdasdasdasdasdasdaksdbjalksdblksdbliahbsgdkas",
+                    "birthDate": "20032000",
+                    "mail": faker.internet.email(firstName),
+                    "phone": faker.phone.number('#############'),
+                    "currentRole": faker.person.jobType(),
+                    "documents": [
+                        {
+                            "cpf": cpf,
+                            "rg": rg
+                        }
+                    ],
+                    "address": [
+                        {
+                            "country": faker.location.country(),
+                            "zipCode": faker.location.zipCode('########'),
+                            "city": faker.location.city(),
+                            "state": "PE",
+                            "district": 'Brazil',
+                            "street": faker.location.street(),
+                            "number": faker.location.buildingNumber(),
+                            "complement": '363 casa'
+                        }
+                    ]     
+                },
+            }).then((Response) => {
+                expect(Response.status).to.eq(400);
+                expect(Response.body).to.deep.eq(['O campo Nome Completo deve conter entre 8 e 100 caracteres.'])
+                cy.log(Response.body)
+            })
+            
+        });
+        
+    })
+    
+
+    it('Cadastro com sucesso', () => {
         cy.api({
             method: 'POST',
-            url: 'http://localhost:21165/api/client',
+            url: 'https://develop.qacoders-academy.com.br/api/client',
             headers: {authorization: token},
             failOnStatusCode: false,
             body: {
                 "clientCode": faker.person.firstName(),
                 "fullName": `${firstName} ${lastName}`,
-                "birthDate": "20/03/2000",
+                "birthDate": "20032000",
                 "mail": faker.internet.email(firstName),
-                "phone": faker.phone.number('## ## ##### ####'),
+                "phone": faker.phone.number('#############'),
                 "currentRole": faker.person.jobType(),
                 "documents": [
                     {
@@ -34,21 +191,15 @@ describe('Validando e cadastrando cliente', () => {
                 "address": [
                     {
                         "country": faker.location.country(),
-                        "zipCode": faker.location.zipCode('#####-###'),
+                        "zipCode": faker.location.zipCode('########'),
                         "city": faker.location.city(),
-                        "state": faker.location.street(),
+                        "state": "PE",
                         "district": 'Brazil',
                         "street": faker.location.street(),
                         "number": faker.location.buildingNumber(),
                         "complement": '363 casa'
                     }
-                ],
-                "status": true,
-                "audit": [
-                    {
-                        "registrationDate": "newDate()",
-                        "loginUser": "loginUser"
-                    }]
+                ]     
             },
         }).then((Response) => {
             expect(Response.status).to.eq(201)
@@ -59,15 +210,15 @@ describe('Validando e cadastrando cliente', () => {
     it('E-mail já cadastrado', () => {
         cy.api({
             method: 'POST',
-            url: 'http://localhost:21165/api/client',
+            url: 'https://develop.qacoders-academy.com.br/api/client',
             headers: {authorization: token},
             failOnStatusCode: false,
             body: {
                 "clientCode": faker.person.firstName(),
                 "fullName": `${firstName} ${lastName}`,
-                "birthDate": "20/03/2000",
-                "mail": 'testejr@qacoders.com',
-                "phone": faker.phone.number('## ## ##### ####'),
+                "birthDate": "20032000",
+                "mail": "teste@qacoders.com",
+                "phone": faker.phone.number('#############'),
                 "currentRole": faker.person.jobType(),
                 "documents": [
                     {
@@ -78,38 +229,32 @@ describe('Validando e cadastrando cliente', () => {
                 "address": [
                     {
                         "country": faker.location.country(),
-                        "zipCode": faker.location.zipCode('#####-###'),
+                        "zipCode": faker.location.zipCode('########'),
                         "city": faker.location.city(),
-                        "state": faker.location.street(),
+                        "state": "PE",
                         "district": 'Brazil',
                         "street": faker.location.street(),
                         "number": faker.location.buildingNumber(),
                         "complement": '363 casa'
                     }
-                ],
-                "status": true,
-                "audit": [
-                    {
-                        "registrationDate": "newDate()",
-                        "loginUser": "loginUser"
-                    }]
+                ]     
             },
         }).then((Response) => {
-            expect(Response.status).to.eq(400);
+            expect(Response.status).to.eq(409);
             expect(Response.body.alert[0]).to.eq('E-mail já cadastrado.')
           });
           
         
     });
 
-    it.only('teste', () => {
+    it('teste', () => {
 
         cy.fixture('users').then(function(users){
             const userDate = users.CadastroSucess
             
             cy.api({
                 method: 'POST',
-                url: 'http://localhost:21165/api/client',
+                url: 'https://develop.qacoders-academy.com.br/api/client',
                 headers: {authorization: token},
                 failOnStatusCode: false, 
                 body: userDate
@@ -121,4 +266,6 @@ describe('Validando e cadastrando cliente', () => {
         
     })
 })
+
+
 
