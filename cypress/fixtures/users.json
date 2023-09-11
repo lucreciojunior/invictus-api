@@ -1,0 +1,36 @@
+{
+    "CadastroSucess": {
+      "clientCode": "teste com sucesso",
+      "fullName": "Antonio Ricardo",
+      "birthDate": "20/03/2000",
+      "mail": "testeqacoders@gmail.com",
+      "phone": "55 81 99701-2541",
+      "currentRole": "Antonomo",
+      "documents": [
+        {
+          "cpf": "11122233345",
+          "rg": "0000000"
+        }
+      ],
+      "address": [
+        {
+          "country": "Belgium",
+          "zipCode": "81688-882",
+          "city": "Russelview",
+          "state": "SI",
+          "district": "Wellingtonberg",
+          "street": "Fisher Well",
+          "number": 1790,
+          "complement": "509",
+          "_id": "64808cf6d9bdb2aa991267db"
+        }
+      ],
+      "status": true,
+      "audit": [
+        {
+          "registrationDate": "newDate()",
+          "loginUser": "loginUser"
+        }
+      ]
+    }
+  }

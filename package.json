@@ -1,0 +1,21 @@
+{
+  "name": "api-cadastro-de-clientes",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "-": "^0.0.1",
+    "cypress": "^12.13.0",
+    "cypress-plugin-api": "^2.11.1",
+    "D": "^1.0.0"
+  },
+  "devDependencies": {
+    "@faker-js/faker": "^8.0.2"
+  }
+}
